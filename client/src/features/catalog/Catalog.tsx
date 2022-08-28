@@ -8,6 +8,7 @@ export default function Catalog() {
 const [products , setProducts] = useState<Product[]>([])
 
 useEffect(() => {
+  console.log("test")
   //first ทำงานก่อนเป็นลำดับเเรก
   fetch('http://localhost:5000/api/Product/GetProduct')
   //เข้ามาเเล้วจะเป็นอะไรซักอย่าง ต้องเเปลงเป็น json

@@ -12,9 +12,8 @@ using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductController : ControllerBase
+    
+    public class ProductController : BaseApiController
     {
         // ctor
         private readonly StoreContext _context;
@@ -43,6 +42,8 @@ namespace API.Controllers
         public async Task<IActionResult> GetProduct(int id)
         {
             var data = await _context.Products.FindAsync(id);
+            
+            if (data == null) return NotFound();
            return Ok (data );
         }
     }

@@ -10,6 +10,10 @@ import ProductDetails from '../../features/catalog/ProductDetails';
 import HomePage from '../../features/home/HomePage';
 import AboutPage from '../../features/about/AboutPage';
 import ContactPage from '../../features/contact/ContactPage';
+import NotFound from '../errors/NotFound';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ServerError } from '../errors/ServerError';
 
 export default function App() {
   const [mode ,setMode] = useState(false)
@@ -29,15 +33,23 @@ export default function App() {
     <>
       
       <ThemeProvider theme={darkTheme}>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={200}
+          // hideProgressBar
+          theme="colored"
+        />
       <CssBaseline />
       <Header handleMode={handleMode}/> 
       <Container>
         <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/about" element={<ContactPage />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/catalog/:id" element={<ProductDetails />} />
+        <Route path="/server-error" element={<ServerError />} />
+        <Route path="*" element={<NotFound />} />
 
       </Routes>
         </Container>

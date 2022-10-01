@@ -1,9 +1,13 @@
 import { Card, CardMedia, CardContent, Typography, CardActions, Button, Avatar, CardHeader, IconButton } from '@mui/material'
 import { red } from '@mui/material/colors'
-import React from 'react'
+import React, { useState } from 'react'
 import { Product } from '../../app/models/Product'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
+import { LoadingButton } from "@mui/lab";
+import agent from '../../app/api/agent';
+import { useStoreContext } from '../../app/context/StoreContext';
+
 //rfc
 
 interface Props{
@@ -11,6 +15,18 @@ interface Props{
 }
 
 export default function ProductCard({product}: Props) {
+  const [loading , setloading] = useState (false)
+  const { setBasket } = useStoreContext();
+  
+ function handleAddItem(productId : number){
+  setloading(true);
+  agent.Basket.addItem(productId)
+  .then((basket) => setBasket(basket))
+  .catch((error)=> console.log(error))
+  .finally(()=> setloading(false));
+ }
+ 
+
   return (
     <>
     <Card sx={{ maxWidth: "100%" }}>
@@ -20,6 +36,7 @@ export default function ProductCard({product}: Props) {
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
             {product.name.at(0)?.toUpperCase()}
+            
           </Avatar>
         }
         action={
@@ -49,10 +66,13 @@ export default function ProductCard({product}: Props) {
     </Typography>
   </CardContent>
   <CardActions>
-    <Button size="small">Add to Cart</Button>
+    <LoadingButton loading={loading} onClick={() => handleAddItem(product.id)} size="small">Add to Cart</LoadingButton>
     <Button size="small" component={Link} to={`/catalog/${product.id}`}>View</Button>
   </CardActions>
 </Card>
     </>
   )
 }
+
+
+

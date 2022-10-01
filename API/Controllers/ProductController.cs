@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
 {
-    
     public class ProductController : BaseApiController
     {
         // ctor

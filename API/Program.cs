@@ -42,7 +42,7 @@ var app = builder.Build();
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
     try
     {
-    await context.Database.MigrateAsync(); //สร้ําง DB ให้อัตโนมัติถ้ํายังไม่มี
+    await context.Database.MigrateAsync(); //สร้าง DB ให้อัตโนมัติถ้ํายังไม่มี
     await DbInitializer.Initialize(context); //สร้ํางข้อมูลสินค้ําจำลอง
     }
     catch (Exception ex)
